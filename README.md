@@ -4,7 +4,7 @@
 Cookidoo by imane est une application permettant aux utilisateurs de créer, gérer et organiser leurs recettes de cuisine personnelles, avec un système de favoris et de recherche avancée.
 
 # Vidéo de démonstration : 
-ici dans la racine du Projet
+La vidéo de démonstration est fournie dans le fichier compressé "démo_projet.zip" à la racine du projet.
 
 # Fonctionnalités principales :
 
