@@ -1,0 +1,266 @@
+.hero-section {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .hero-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0 0 5px 0;
+      margin: 0 0 20px 0;
+    }
+    
+    p {
+      font-size: 14px;
+      margin: 0;
+      opacity: 0.9;
+    }
+  }
+}
+
+.section-container {
+  padding: 20px 0;
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px 10px;
+    
+    h2 {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0;
+      color: var(--ion-color-dark);
+    }
+  }
+}
+
+// Catégories en scroll horizontal
+.categories-scroll {
+  display: flex;
+  gap: 15px;
+  padding: 0 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.category-card {
+  flex: 0 0 140px;
+  cursor: pointer;
+  
+  .category-image {
+    width: 140px;
+    height: 110px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+  }
+  
+  &:active .category-image img {
+    transform: scale(0.95);
+  }
+  
+  .category-name {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--ion-color-dark);
+  }
+}
+
+ion-grid {
+  padding: 0 8px;
+}
+
+.recipe-card {
+  margin: 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+  
+  .recipe-image {
+    position: relative;
+    height: 140px;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .difficulty-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      background: rgba(255,255,255,0.9);
+      
+      &.easy { color: #10dc60; }
+      &.medium { color: #ffce00; }
+      &.hard { color: #f04141; }
+    }
+  }
+  
+  ion-card-content {
+    padding: 12px;
+    
+    .recipe-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      color: var(--ion-color-dark);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .recipe-meta {
+      display: flex;
+      gap: 12px;
+      
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+        color: var(--ion-color-medium);
+        
+        ion-icon {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  
+  ion-icon {
+    font-size: 80px;
+    color: var(--ion-color-medium);
+    margin-bottom: 16px;
+  }
+  
+  p {
+    font-size: 16px;
+    color: var(--ion-color-medium);
+    margin-bottom: 20px;
+  }
+}
+.recipe-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  margin: 16px;
+  background: linear-gradient(135deg, #ce7b94 0%, #bd865f 100%);
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  
+  ion-icon {
+    font-size: 32px;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 16px;
+    
+    strong {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+}
+.footer {
+  background: linear-gradient(135deg, #ce7b94 0%, #bd865f 100%);
+  color: white;
+  padding: 24px 16px;
+  margin-top: 40px;
+  
+  .footer-content {
+    text-align: center;
+    
+    .copyright {
+      font-size: 14px;
+      margin: 0 0 8px 0;
+      
+      strong {
+        font-weight: 700;
+      }
+    }
+    
+    .made-with {
+      font-size: 13px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      opacity: 0.9;
+      
+      ion-icon {
+        font-size: 16px;
+        animation: heartbeat 1.5s ease-in-out infinite;
+      }
+    }
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+}

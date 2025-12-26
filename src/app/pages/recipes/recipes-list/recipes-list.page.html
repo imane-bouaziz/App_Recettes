@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Toutes les recettes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleViewMode()">
+        <ion-icon slot="icon-only" [name]="viewMode === 'grid' ? 'list' : 'grid'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Barre de recherche -->
+  <ion-toolbar>
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearchChange($event)"
+      placeholder="Rechercher une recette..."
+      animated
+      showCancelButton="focus">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--Filtres -->
+  <div class="filters-section">
+    <ion-segment scrollable>
+      <ion-segment-button 
+        *ngFor="let cat of categories" 
+        [value]="cat.value"
+        [class.segment-button-checked]="selectedCategory === cat.value"
+        (click)="selectedCategory = cat.value; applyFilters()">
+        <ion-label>{{ cat.label }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div class="filters-row">
+      <ion-select
+        [(ngModel)]="selectedDifficulty"
+        (ionChange)="onDifficultyChange($event)"
+        interface="popover"
+        placeholder="Difficulté">
+        <ion-select-option *ngFor="let diff of difficulties" [value]="diff.value">
+          {{ diff.label }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-select
+        [(ngModel)]="sortBy"
+        (ionChange)="onSortChange($event)"
+        interface="popover"
+        placeholder="Trier par">
+        <ion-select-option *ngFor="let sort of sortOptions" [value]="sort.value">
+          {{ sort.label }}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-button fill="clear" size="small" (click)="clearFilters()">
+        <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+        Réinitialiser
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Résultats -->
+  <div class="results-header">
+    <p>{{ filteredRecipes.length }} recette(s) trouvée(s)</p>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner></ion-spinner>
+    <p>Chargement...</p>
+  </div>
+
+  <!-- Vue Grille -->
+  <ion-grid *ngIf="!loading && viewMode === 'grid'">
+    <ion-row>
+      <ion-col size="6" *ngFor="let recipe of filteredRecipes">
+        <ion-card class="recipe-card" (click)="openRecipe(recipe.id!)">
+          <div class="recipe-image">
+            <img [src]="recipe.imageUrl" [alt]="recipe.title">
+            <div class="difficulty-badge" [ngClass]="recipe.difficulty">
+              {{ getDifficultyLabel(recipe.difficulty) }}
+            </div>
+          </div>
+          <ion-card-content>
+            <h3 class="recipe-title">{{ recipe.title }}</h3>
+            <p class="recipe-category">{{ recipe.category }}</p>
+            <p class="recipe-description">{{ recipe.description }}</p>
+            <div class="recipe-meta">
+              <span class="meta-item">
+                <ion-icon name="time-outline"></ion-icon>
+                {{ recipe.prepTime + recipe.cookTime }} min
+              </span>
+              <span class="meta-item">
+                <ion-icon name="people-outline"></ion-icon>
+                {{ recipe.servings }}
+              </span>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Vue Liste -->
+  <ion-list *ngIf="!loading && viewMode === 'list'" lines="none">
+    <ion-item 
+      *ngFor="let recipe of filteredRecipes" 
+      class="recipe-list-item"
+      (click)="openRecipe(recipe.id!)">
+      <ion-thumbnail slot="start">
+        <img [src]="recipe.imageUrl" [alt]="recipe.title">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ recipe.title }}</h2>
+        <p>{{ recipe.category }}</p>
+        <div class="list-meta">
+          <ion-chip [color]="getDifficultyColor(recipe.difficulty)" size="small">
+            {{ getDifficultyLabel(recipe.difficulty) }}
+          </ion-chip>
+          <span class="meta-item">
+            <ion-icon name="time-outline"></ion-icon>
+            {{ recipe.prepTime + recipe.cookTime }} min
+          </span>
+          <span class="meta-item">
+            <ion-icon name="people-outline"></ion-icon>
+            {{ recipe.servings }}
+          </span>
+        </div>
+      </ion-label>
+      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && filteredRecipes.length === 0" class="empty-state">
+    <ion-icon name="search-outline"></ion-icon>
+    <h2>Aucune recette trouvée</h2>
+    <p>Essayez de modifier vos filtres</p>
+    <ion-button (click)="clearFilters()">Réinitialiser les filtres</ion-button>
+  </div>
+</ion-content>

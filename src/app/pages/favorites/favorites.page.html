@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mes Favoris</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner></ion-spinner>
+    <p>Chargement...</p>
+  </div>
+
+  <!-- Liste des favoris -->
+  <ion-grid *ngIf="!loading && favoriteRecipes.length > 0">
+    <ion-row>
+      <ion-col size="6" *ngFor="let recipe of favoriteRecipes">
+        <ion-card class="recipe-card" (click)="openRecipe(recipe.id)">
+          <div class="recipe-image">
+            <img [src]="recipe.imageUrl" [alt]="recipe.title">
+            <div class="difficulty-badge" [ngClass]="recipe.difficulty">
+              {{ recipe.difficulty === 'easy' ? 'Facile' : 
+                 recipe.difficulty === 'medium' ? 'Moyen' : 'Difficile' }}
+            </div>
+          </div>
+          <ion-card-content>
+            <h3 class="recipe-title">{{ recipe.title }}</h3>
+            <div class="recipe-meta">
+              <span class="meta-item">
+                <ion-icon name="time-outline"></ion-icon>
+                {{ recipe.prepTime + recipe.cookTime }} min
+              </span>
+              <span class="meta-item">
+                <ion-icon name="people-outline"></ion-icon>
+                {{ recipe.servings }}
+              </span>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && favoriteRecipes.length === 0" class="empty-state">
+    <ion-icon name="heart-outline"></ion-icon>
+    <h2>Aucun favori</h2>
+    <p>Ajoutez des recettes à vos favoris pour les retrouver ici</p>
+    <ion-button [routerLink]="['/home']">Découvrir des recettes</ion-button>
+  </div>
+</ion-content>

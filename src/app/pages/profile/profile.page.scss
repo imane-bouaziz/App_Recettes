@@ -1,0 +1,142 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.profile-container {
+  padding: 20px;
+}
+
+.profile-header {
+  text-align: center;
+  padding: 30px 20px;
+  background: linear-gradient(135deg, #ce7b94 0%, #bd865f 100%);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  color: white;
+  
+  .avatar {
+    margin-bottom: 16px;
+    
+    ion-icon {
+      font-size: 100px;
+      color: white;
+    }
+  }
+  
+  h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+  }
+  
+  .member-since {
+    font-size: 14px;
+    opacity: 0.9;
+    margin: 0;
+  }
+}
+
+.stats-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+  
+  .stat-card {
+    background: var(--ion-color-light);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    
+    &:active {
+      transform: scale(0.98);
+    }
+    
+    ion-icon {
+      font-size: 40px;
+    }
+    
+    .stat-info {
+      h3 {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 0 0 4px 0;
+        color: var(--ion-color-dark);
+      }
+      
+      p {
+        font-size: 14px;
+        margin: 0;
+        color: var(--ion-color-medium);
+      }
+    }
+  }
+}
+
+.menu-section {
+  margin-bottom: 24px;
+  
+  ion-list {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  ion-item {
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+    font-size: 16px;
+  }
+}
+
+.logout-section {
+  margin-bottom: 24px;
+}
+
+.app-version {
+  text-align: center;
+  padding: 20px;
+  
+  p {
+    font-size: 12px;
+    color: var(--ion-color-medium);
+    margin: 4px 0;
+    
+    &.copyright {
+      font-size: 11px;
+    }
+  }
+}
+
+.not-logged-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  text-align: center;
+  padding: 20px;
+  
+  ion-icon {
+    font-size: 100px;
+    color: var(--ion-color-medium);
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    color: var(--ion-color-dark);
+    margin-bottom: 12px;
+  }
+  
+  p {
+    color: var(--ion-color-medium);
+    margin-bottom: 24px;
+  }
+}

@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mon Profil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <!-- Profil utilisateur-->
+  <div *ngIf="!loading && currentUser" class="profile-container">
+    
+    <!-- Header profil -->
+    <div class="profile-header">
+      <div class="avatar">
+        <ion-icon name="person-circle"></ion-icon>
+      </div>
+      <h2>{{ currentUser.email }}</h2>
+      <p class="member-since">Membre depuis {{ userStats.memberSince }}</p>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="stats-section">
+      <div class="stat-card" (click)="goToMyRecipes()">
+        <ion-icon name="restaurant" color="primary"></ion-icon>
+        <div class="stat-info">
+          <h3>{{ userStats.recipesCount }}</h3>
+          <p>Recettes</p>
+        </div>
+      </div>
+
+      <div class="stat-card" (click)="goToFavorites()">
+        <ion-icon name="heart" color="danger"></ion-icon>
+        <div class="stat-info">
+          <h3>{{ userStats.favoritesCount }}</h3>
+          <p>Favoris</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu options -->
+    <div class="menu-section">
+      <ion-list lines="full">
+        <ion-item button (click)="goToMyRecipes()">
+          <ion-icon slot="start" name="restaurant-outline" color="primary"></ion-icon>
+          <ion-label>Recettes</ion-label>
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+        </ion-item>
+
+        <ion-item button (click)="goToFavorites()">
+          <ion-icon slot="start" name="heart-outline" color="danger"></ion-icon>
+          <ion-label>Mes favoris</ion-label>
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+        </ion-item>
+
+        <ion-item button (click)="showHelp()">
+          <ion-icon slot="start" name="help-circle-outline" color="medium"></ion-icon>
+          <ion-label>Aide</ion-label>
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+        </ion-item>
+
+        <ion-item button (click)="showAbout()">
+          <ion-icon slot="start" name="information-circle-outline" color="medium"></ion-icon>
+          <ion-label>À propos</ion-label>
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <!-- Bouton déconnexion -->
+    <div class="logout-section">
+      <ion-button expand="block" color="danger" (click)="logout()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        Déconnexion
+      </ion-button>
+    </div>
+
+    <!-- Version -->
+    <div class="app-version">
+      <p>Cookidoo</p>
+      <p class="copyright">© 2025 - Made with ❤️ by Imane</p>
+    </div>
+  </div>
+
+  <!-- Non connecté -->
+  <div *ngIf="!loading && !currentUser" class="not-logged-in">
+    <ion-icon name="person-circle-outline"></ion-icon>
+    <h2>Non connecté</h2>
+    <p>Connectez-vous pour accéder à votre profil</p>
+    <ion-button [routerLink]="['/home']">
+      Retour à l'accueil
+    </ion-button>
+  </div>
+</ion-content>

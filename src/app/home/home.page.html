@@ -1,0 +1,123 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="medium">
+    <ion-title>Mes Recettes</ion-title>
+    <ion-buttons slot="end">
+      <!-- BOUTON RECHERCHE (LOUPE) -->
+      <ion-button (click)="goToSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+      <!-- Bouton Favoris -->
+      <ion-button (click)="goToFavorites()">
+        <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
+      </ion-button>
+      
+      <!-- Bouton Ajouter -->
+      <ion-button (click)="goToAddRecipe()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+      
+      <!-- Bouton Authentification -->
+      <ion-button (click)="openAuthMenu()">
+        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Hero Banner -->   
+   <div class="hero-section">     
+    <img src="assets/hero.jpg" alt="Banner">     
+    <div class="hero-text">       
+      <h1>Découvrez de délicieuses recettes</h1>       
+      <p>Des milliers de recettes à portée de main</p>     
+    </div>   
+  </div>
+  <!-- COMPTEUR DE RECETTES -->
+  <div class="recipe-counter">
+    <ion-icon name="restaurant-outline"></ion-icon>
+    <p>
+      <strong>{{ allRecipesCount }}</strong> 
+    {{ allRecipesCount === 1 ? 'recette disponible' : 'recettes disponibles' }}
+  </p>
+  </div>
+  <!-- Catégories -->
+  <div class="section-container">
+    <div class="section-header">
+      <h2>Catégories</h2>
+    </div>
+    
+    <div class="categories-scroll">
+      <div class="category-card" *ngFor="let category of categories" (click)="openCategory(category.name)">
+        <div class="category-image">
+          <img [src]="category.imageUrl" [alt]="category.name">
+        </div>
+        <p class="category-name">{{ category.name }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recettes Populaires -->
+  <div class="section-container">
+    <div class="section-header">
+      <h2>Recettes Populaires</h2>
+      <ion-button fill="clear" size="small" [routerLink]="['/recipes-list']">
+        Voir tout
+        <ion-icon slot="end" name="chevron-forward"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner></ion-spinner>
+    </div>
+
+    <!-- Grille de recettes -->
+    <ion-grid *ngIf="!loading && recipes.length > 0">
+      <ion-row>
+        <ion-col size="6" *ngFor="let recipe of recipes">
+          <ion-card class="recipe-card" (click)="openRecipe(recipe.id!)">
+            <div class="recipe-image">
+              <img [src]="recipe.imageUrl" [alt]="recipe.title">
+              <div class="difficulty-badge" [ngClass]="recipe.difficulty">
+                {{ recipe.difficulty === 'easy' ? 'Facile' : 
+                   recipe.difficulty === 'medium' ? 'Moyen' : 'Difficile' }}
+              </div>
+            </div>
+            <ion-card-content>
+              <h3 class="recipe-title">{{ recipe.title }}</h3>
+              <div class="recipe-meta">
+                <span class="meta-item">
+                  <ion-icon name="time-outline"></ion-icon>
+                  {{ recipe.prepTime + recipe.cookTime }} min
+                </span>
+                <span class="meta-item">
+                  <ion-icon name="people-outline"></ion-icon>
+                  {{ recipe.servings }}
+                </span>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Message si pas de recettes -->
+    <div *ngIf="!loading && recipes.length === 0" class="empty-state">
+      <ion-icon name="restaurant-outline"></ion-icon>
+      <p>Aucune recette disponible</p>
+      <ion-button (click)="goToAddRecipe()">Ajouter une recette</ion-button>
+    </div>
+  </div>
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-content">
+      <p class="copyright">
+        © 2025 - <strong>Cookidoo</strong> by <strong>Imane</strong> 
+      </p>
+      <p class="made-with">
+        Made with <ion-icon name="heart" color="danger"></ion-icon>
+      </p>
+    </div>
+  </div>
+</ion-content>
